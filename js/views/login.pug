@@ -1,0 +1,19 @@
+extends layout.pug 
+
+block append style
+  style.
+    h2 {text-align: center} [type='submit'] {width: 99%; margin-top: 3px}
+    form {border: outset 2px; border-radius: 10px; padding: 10px; width: 250px; margin-left: 50%; transform:translate(-50%);}
+    input, button { border-radius: 6px!important; border-width: 1px; width: 99%}
+
+block link
+  link(rel='stylesheet', href='https://cdn.rawgit.com/twbs/bootstrap/48938155eb24b4ccdde09426066869504c6dab3c/dist/css/bootstrap.min.css')
+
+block content
+    h2 Введите логин и пароль!
+    form(method='post', action='/login')
+      input(name='login', placeholder='логин')
+      br
+      input(name='password', type='password', placeholder='пароль')
+      br
+      input.btn.btn-primary(type='submit', value='Залогиниться')

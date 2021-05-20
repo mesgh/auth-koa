@@ -1,0 +1,11 @@
+extends layout.pug
+
+block append style 
+  style.
+    .header { display: flex; align-items: center; justify-content:center; background-color: #ac7; padding: 10px; } button { margin-left: 10px;}
+
+block head
+  .header
+    h4= login 
+    form(method="get" action="/logout") 
+      button Выйти
