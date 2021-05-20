@@ -47,8 +47,6 @@ app.use(bodyParser());
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(router.routes());
-
 app.use(async (ctx, next) => {
   if (ctx.isAuthenticated()) {
     await next();
@@ -56,6 +54,8 @@ app.use(async (ctx, next) => {
     ctx.redirect('/login');
   }
 });
+
+app.use(router.routes());
 
 app.use(async (ctx, next) => {
   ctx.set('Content-Type', 'text/html; charset=utf-8');
@@ -83,7 +83,6 @@ router
   })
   .get('/login', async (ctx, next) => {
     if (ctx.isUnauthenticated()) {
-      ctx.type = 'text/plain';
       await ctx.render('login');
     } else {
       ctx.redirect('/profile');
@@ -91,11 +90,9 @@ router
   })
   .post('/login', passport.authenticate('local', { successRedirect: '/profile', failureRedirect: '/login' }))
   .get('/profile', async (ctx, next) => {
-      ctx.type = 'text/plain';
       await ctx.render('profile', { login: ctx.state.user.login });
   })
   .get('/users', async (ctx, next) => {
-      ctx.type = 'text/plain';
       const users = await User.find();
       await ctx.render('users', { login: ctx.state.user.login, users });
   })
