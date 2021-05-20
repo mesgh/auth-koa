@@ -48,16 +48,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(async (ctx, next) => {
-  if (ctx.isAuthenticated() || ctx.url === '/login') {
-    await next();
-  } else {
-    ctx.redirect('/login');
-  }
-});
-
-app.use(router.routes());
-
-app.use(async (ctx, next) => {
   ctx.set('Content-Type', 'text/html; charset=utf-8');
   try {
     await next();
@@ -73,6 +63,16 @@ app.use(async (ctx, next) => {
     }
   }
 });
+
+app.use(async (ctx, next) => {
+  if (ctx.isAuthenticated() || ctx.url === '/login') {
+    await next();
+  } else {
+    ctx.redirect('/login');
+  }
+});
+
+app.use(router.routes());
 
 
 app.listen(process.env.PORT || PORT, () => log(process.pid));
