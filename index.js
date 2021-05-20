@@ -48,7 +48,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(async (ctx, next) => {
-  if (ctx.isAuthenticated()) {
+  if (ctx.isAuthenticated() || ctx.url === '/login') {
     await next();
   } else {
     ctx.redirect('/login');
